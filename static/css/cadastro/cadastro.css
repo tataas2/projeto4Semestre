@@ -1,0 +1,241 @@
+.secaoCadastro {
+    /* Altura, Largura e Regras de posição */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20vh;
+
+    /* Cores e Decorações */
+
+    /* Animações */
+}
+
+.cadastro {
+    /* Altura, Largura e Regras de posição */
+    display: none;
+    width: 650px;
+    height: 630px;
+    border-radius: 8px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    /* Cores e Decorações */
+    background-color: #333333;
+
+    /* Animações */
+}
+
+    .cadastro span {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        position: relative;
+    }
+
+    .cadastro label {
+        color: white;
+        font-family: "Delius", cursive;
+        font-weight: 700;
+        font-style: normal;
+        margin-left: 10px;
+    }
+
+    .innerBordCadastro {
+        /* Altura, Largura e Regras de posição */
+        width: 600px;
+        height: 580px;
+        position: absolute;
+
+        /* Cores e Decorações */
+        border: 3px solid white;
+
+        /* Animações */
+    }
+
+    .innerTextCadastro {
+        /* Altura, Largura e Regras de posição */
+        width: 130px;
+        height: 20px;
+        margin-bottom: 580px;
+        position: absolute;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+
+        /* Cores e Decorações */
+        background-color: #333333;
+
+        /* Animações */
+    }
+
+        .innerTextCadastro p {
+            font-size: 25px;
+            color: red;
+        }
+
+.login {
+    /* Altura, Largura e Regras de posição */
+    display: none;
+    width: 650px;
+    height: 300px;
+    border-radius: 8px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    /* Cores e Decorações */
+    background-color: #333333;
+
+    /* Animações */
+}
+
+    .login span {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        position: relative;
+    }
+
+    .login label {
+        color: white;
+        font-family: "Delius", cursive;
+        font-weight: 700;
+        font-style: normal;
+        margin-left: 10px;
+    }
+
+    .innerBordLogin {
+        /* Altura, Largura e Regras de posição */
+        width: 600px;
+        height: 250px;
+        position: absolute;
+
+        /* Cores e Decorações */
+        border: 3px solid white;
+
+        /* Animações */
+    }
+
+    .innerTextLogin {
+        /* Altura, Largura e Regras de posição */
+        width: 80px;
+        height: 20px;
+        margin-bottom: 250px;
+        position: absolute;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+
+        /* Cores e Decorações */
+        background-color: #333333;
+
+        /* Animações */
+    }
+
+        .innerTextLogin p {
+            font-size: 25px;
+            color: red;
+        }
+
+.inputCadastro {
+    /* Altura, Largura e Regras de posição */
+    width: 400px;
+    height: 30px;
+    border-radius: 6px;
+    padding: 9px;
+
+    /* Cores e Decorações */
+    font-family: "Delius", cursive;
+    font-weight: 400;
+    font-style: normal;
+
+    /* Animações */
+}
+
+.botaoCadastro {
+    /* Altura, Largura e Regras de posição */
+    height: 50px;
+    width: 100px;
+    position: relative;
+
+    /* Cores e Decorações */
+    background-color: transparent;
+    border: 2px solid rgb(0, 160, 255);
+    color: rgb(0, 160, 255) !important;
+    font-family: 'HeroesAssemble';
+    font-size: 20px;
+
+    /* Animações */
+    transition: 1s;
+}
+
+    .botaoCadastro:hover {
+        cursor: pointer;
+        border: 2px solid rgb(255, 0, 0);
+        color: rgb(255, 0, 0) !important;
+    }
+
+.loginBotao {
+    /* Altura, Largura e Regras de posição */
+    margin-left: 320px;
+    margin-top: 27px;
+    height: 50px;
+    width: 100px;
+    position: absolute;
+
+    /* Cores e Decorações */
+    background-color: transparent;
+    border: none;
+    border-left: 2px solid grey;
+
+    /* Animações */
+}
+
+    .loginBotao:hover {
+        cursor: pointer;
+        background-color: #3333332d;
+    }
+
+.loginMudanca {
+    /* Altura, Largura e Regras de posição */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 300px;
+
+    /* Cores e Decorações */
+
+    /* Animações */
+}
+
+    .loginMudanca p {
+        color: white;
+        margin-right: 5px;
+    }
+
+    .loginLinkMudanca {
+        /* Altura, Largura e Regras de posição */
+
+        /* Cores e Decorações */
+        color: rgb(0, 160, 255) !important;
+
+        /* Animações */
+        transition: 1s;
+    }
+
+    .loginLinkMudanca:hover {
+        /* Altura, Largura e Regras de posição */
+
+        /* Cores e Decorações */
+        cursor: pointer;
+        color: rgb(255, 0, 0) !important;
+
+        /* Animações */
+    }

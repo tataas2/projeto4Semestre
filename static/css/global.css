@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'HeroesAssemble';
+  src: url('../fonts/marvel/heroesassemble2.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+    /* Altura, Largura e Regras de posição */
+    margin: 0;
+
+    /* Cores e Decorações */
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.02), rgba(0,0,0,0.02)),
+        url('../img/global/background.png');
+    font-family: 'HeroesAssemble';
+
+    /* Animações */
+}
+
+.container {
+    /* Altura, Largura e Regras de posição */
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    overflow: hidden;
+
+    /* Cores e Decorações */
+
+    /* Animações */
+}

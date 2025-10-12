@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Cadastro - Pizzaria do Stan </title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" type="text/css" href="../static/css/global.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/cadastro/cadastro.css">
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet">
+
+    <!-- Scripts -->
+    <script src="../static/js/cadastro.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="secaoCadastro">
+            <section class="secaoCadastroStan">
+                <img src="../static/img/global/stan.png">
+            </section>
+
+            <section class="cadastro" id="cadastro">
+                    <div class="innerBordCadastro"></div>
+                    <div class="innerTextCadastro"><p>Cadastre-se</p></div>
+
+                    <span>
+                        <label for="nome">Nome:</label>
+                        <input tipe="text" class="inputCadastro" id="nome" name="nome" placeholder="DIgite aqui..." required>
+                    </span>
+
+                    <span>
+                        <label for="cpf">CPF:</label>
+                        <input tipe="number" class="inputCadastro" id="cpf" name="cpf" placeholder="DIgite aqui..." required>
+                    </span>
+
+                    <span>
+                        <label for="telefone">Telefone:</label>
+                        <input tipe="tel" class="inputCadastro" id="telefone" name="telefone" placeholder="DIgite aqui..." required>
+                    </span>
+
+                    <span>
+                        <label for="cep">CEP:</label>
+                        <input tipe="number" class="inputCadastro" id="cep" name="cep" placeholder="DIgite aqui..." required>
+                    </span>
+
+                    <span>
+                        <label for="numResidencia">Número da Residência:</label>
+                        <input tipe="number" class="inputCadastro" id="numResidencia" name="numResidencia" placeholder="DIgite aqui..." required>
+                    </span>
+
+                    <button class="botaoCadastro"> Enviar </button>
+
+                    <div class="loginMudanca"> <p> Você já tem um usuário? Faça aqui seu <p class="loginLinkMudanca" onclick="cadastroPLogin()">Login</p></p> </div>
+            </section>
+
+            <section class="login" id="login">
+                    <div class="innerBordLogin"></div>
+                    <div class="innerTextLogin"><p>Login</p></div>
+
+                    <span>
+                        <label for="telefoneLogin">Telefone:</label>
+                        <input tipe="tel" class="inputCadastro" id="telefoneLogin" name="telefoneLogin" placeholder="DIgite aqui..." required>
+                    </span>
+
+                    <span>
+                        <label for="codigo">Código:</label>
+                        <input tipe="number" class="inputCadastro" id="numResidencia" name="numResidencia" placeholder="DIgite aqui..." required> 
+                        <button class="loginBotao" onclick="salvaLogin()"> Enviar </button>
+                    </span>
+
+                    <div class="loginMudanca"> <p> Ainda não tem um usuário? Faça aqui seu <p class="loginLinkMudanca" onclick="loginPCadastro()">Cadastro</p></p> </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
