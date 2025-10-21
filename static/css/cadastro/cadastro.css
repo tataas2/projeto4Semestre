@@ -166,8 +166,8 @@
 
     /* Cores e Decorações */
     background-color: transparent;
-    border: 2px solid rgb(0, 160, 255);
-    color: rgb(0, 160, 255) !important;
+    border: 2px solid rgb(255, 0, 0);
+    color: rgb(255, 0, 0) !important;
     font-family: 'HeroesAssemble';
     font-size: 20px;
 
@@ -224,7 +224,7 @@
         /* Altura, Largura e Regras de posição */
 
         /* Cores e Decorações */
-        color: rgb(0, 160, 255) !important;
+        color: rgb(255, 0, 0) !important;
 
         /* Animações */
         transition: 1s;
