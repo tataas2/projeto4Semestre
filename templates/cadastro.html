@@ -1,82 +1,71 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Cadastro - Pizzaria do Stan </title>
-
-    <!-- Estilos -->
-    <link rel="stylesheet" type="text/css" href="../static/css/global.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/cadastro/cadastro.css">
-
+    <title> Cadastro - Pizzaria do Stan </title> <!-- Estilos -->
     <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet"> <!-- Scripts -->
 
-    <!-- Scripts -->
+    <!-- CSS -->
+ 
+    <link rel="stylesheet" type="text/css" href="../static/css/global.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/cadastro/cadastro.css">
+
+    <!-- JS -->
     <script src="../static/js/cadastro.js"></script>
+    <script src="../static/js/preLoad.js"></script>
 
 </head>
+
 <body>
     <div class="container">
         <div class="secaoCadastro">
-            <section class="secaoCadastroStan">
-                <img src="../static/img/global/stan.png">
-            </section>
-
+            <section class="secaoCadastroStan"> <img src="../static/img/global/stan.png"> </section> <!-- CADASTRO -->
             <section class="cadastro" id="cadastro">
+                <form action="{{ url_for('cadastro') }}" method="POST">
                     <div class="innerBordCadastro"></div>
-                    <div class="innerTextCadastro"><p>Cadastre-se</p></div>
-
-                    <span>
-                        <label for="nome">Nome:</label>
-                        <input tipe="text" class="inputCadastro" id="nome" name="nome" placeholder="DIgite aqui..." required>
-                    </span>
-
-                    <span>
-                        <label for="cpf">CPF:</label>
-                        <input tipe="number" class="inputCadastro" id="cpf" name="cpf" placeholder="DIgite aqui..." required>
-                    </span>
-
-                    <span>
-                        <label for="telefone">Telefone:</label>
-                        <input tipe="tel" class="inputCadastro" id="telefone" name="telefone" placeholder="DIgite aqui..." required>
-                    </span>
-
-                    <span>
-                        <label for="cep">CEP:</label>
-                        <input tipe="number" class="inputCadastro" id="cep" name="cep" placeholder="DIgite aqui..." required>
-                    </span>
-
-                    <span>
-                        <label for="numResidencia">Número da Residência:</label>
-                        <input tipe="number" class="inputCadastro" id="numResidencia" name="numResidencia" placeholder="DIgite aqui..." required>
-                    </span>
-
-                    <button class="botaoCadastro" onclick="salvaLogin()"> Enviar </button>
-
-                    <div class="loginMudanca"> <p> Você já tem um usuário? Faça aqui seu <p class="loginLinkMudanca" onclick="cadastroPLogin()">Login</p></p> </div>
-            </section>
-
+                    <div class="innerTextCadastro">
+                        <p>Cadastre-se</p>
+                    </div> <span> <label for="nome">Nome:</label> <input type="text" class="inputCadastro" id="nome"
+                            name="nome" required> </span> <span> <label for="cpf">CPF:</label> <input type="text"
+                            class="inputCadastro" id="cpf" name="cpf" required> </span> <span> <label
+                            for="telefone">Telefone:</label> <input type="tel" class="inputCadastro" id="telefone"
+                            name="telefone" required> </span> <span> <label for="cep">CEP:</label> <input type="text"
+                            class="inputCadastro" id="cep" name="cep" required> </span> <span> <label
+                            for="numResidencia">Número da Residência:</label> <input type="number" class="inputCadastro"
+                            id="numResidencia" name="numResidencia" required> </span> <span> <label
+                            for="senha">Senha:</label> <input type="password" class="inputCadastro" id="senha"
+                            name="senha" required> </span> <button class="botaoCadastro"
+                        type="submit">Cadastrar</button>
+                    <div class="loginMudanca">
+                        <p>Já tem uma conta?
+                        <p class="loginLinkMudanca" onclick="cadastroPLogin()">Login</p>
+                        </p>
+                    </div>
+                </form>
+            </section> <!-- LOGIN -->
             <section class="login" id="login">
+                <form action="{{ url_for('login') }}" method="POST">
                     <div class="innerBordLogin"></div>
-                    <div class="innerTextLogin"><p>Login</p></div>
-
-                    <span>
-                        <label for="telefoneLogin">Telefone:</label>
-                        <input tipe="tel" class="inputCadastro" id="telefoneLogin" name="telefoneLogin" placeholder="DIgite aqui..." required>
-                    </span>
-
-                    <span>
-                        <label for="codigo">Código:</label>
-                        <input tipe="number" class="inputCadastro" id="numResidencia" name="numResidencia" placeholder="DIgite aqui..." required> 
-                        <button class="loginBotao" onclick="salvaLogin()"> Enviar </button>
-                    </span>
-
-                    <div class="loginMudanca"> <p> Ainda não tem um usuário? Faça aqui seu <p class="loginLinkMudanca" onclick="loginPCadastro()">Cadastro</p></p> </div>
+                    <div class="innerTextLogin">
+                        <p>Login</p>
+                    </div> <span> <label for="telefoneLogin">Telefone:</label> <input type="tel" class="inputCadastro"
+                            id="telefoneLogin" name="telefone" required> </span> <span> <label
+                            for="senhaLogin">Senha:</label> <input type="password" class="inputCadastro" id="senhaLogin"
+                            name="senha" required> </span> <button class="loginBotao" type="submit" >Entrar</button>
+                    <div class="loginMudanca">
+                        <p>Ainda não tem uma conta?
+                        <p class="loginLinkMudanca" onclick="loginPCadastro()">Cadastro</p>
+                        </p>
+                    </div>
+                </form>
             </section>
         </div>
     </div>
 </body>
+
 </html>

@@ -1,0 +1,70 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eee;
+}
+
+header {
+    background: #222;
+    color: #fff;
+    padding: 12px;
+    text-align: center;
+}
+
+#total-geral {
+    margin-top: 4px;
+    font-weight: bold;
+}
+
+#novo-pedido {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    background: #fff;
+}
+
+#pedido-input {
+    flex: 1;
+    padding: 8px;
+}
+
+button {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.board {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.column {
+    background: #fff;
+    padding: 10px;
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.column h2 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.pedido-list {
+    flex: 1;
+    border: 1px dashed #aaa;
+    min-height: 60px;
+    padding: 6px;
+}
+
+.pedido {
+    background: #fff;
+    border: 1px solid #666;
+    padding: 6px;
+    margin-bottom: 6px;
+    cursor: grab;
+}

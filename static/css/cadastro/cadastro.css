@@ -1,4 +1,4 @@
-.secaoCadastro {
+.secaoCadastro  {
     /* Altura, Largura e Regras de posição */
     display: flex;
     align-items: center;
@@ -11,7 +11,8 @@
     /* Animações */
 }
 
-.cadastro {
+
+.cadastro  {
     /* Altura, Largura e Regras de posição */
     display: none;
     width: 650px;
@@ -28,7 +29,7 @@
     /* Animações */
 }
 
-    .cadastro span {
+    .cadastro span  {
         display: flex;
         flex-direction: column;
         gap: 5px;
@@ -43,6 +44,13 @@
         margin-left: 10px;
     }
 
+    .cadastro form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      
+    }
     .innerBordCadastro {
         /* Altura, Largura e Regras de posição */
         width: 600px;
@@ -109,6 +117,13 @@
         margin-left: 10px;
     }
 
+    .login form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      
+    }
     .innerBordLogin {
         /* Altura, Largura e Regras de posição */
         width: 600px;
@@ -148,7 +163,7 @@
     width: 400px;
     height: 30px;
     border-radius: 6px;
-    padding: 9px;
+    padding: 8px;
 
     /* Cores e Decorações */
     font-family: "Delius", cursive;
@@ -163,7 +178,7 @@
     height: 50px;
     width: 100px;
     position: relative;
-
+   margin-top: 7px;
     /* Cores e Decorações */
     background-color: transparent;
     border: 2px solid rgb(255, 0, 0);
@@ -184,8 +199,8 @@
 .loginBotao {
     /* Altura, Largura e Regras de posição */
     margin-left: 320px;
-    margin-top: 27px;
-    height: 50px;
+    margin-top: 55px;
+    height: 45px;
     width: 100px;
     position: absolute;
 
@@ -196,6 +211,7 @@
 
     /* Animações */
 }
+
 
     .loginBotao:hover {
         cursor: pointer;

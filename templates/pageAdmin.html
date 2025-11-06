@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel da Pizzaria</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/admin/admin.css">
+</head>
+
+<body>
+    <header>
+        <h1>Painel de Pedidos</h1>
+        <div id="total-geral">Total do Dia: 0</div>
+    </header>
+    <section id="novo-pedido"> <input type="text" id="pedido-input" placeholder="Número ou nome do pedido"> <button
+            id="add-btn">Adicionar</button> </section>
+    <main class="board">
+        <div class="column" data-status="solicitado">
+            <h2>Solicitado (<span class="count">0</span>)</h2>
+            <div class="pedido-list"></div>
+        </div>
+        <div class="column" data-status="preparando">
+            <h2>Preparando (<span class="count">0</span>)</h2>
+            <div class="pedido-list"></div>
+        </div>
+        <div class="column" data-status="entrega">
+            <h2>Saiu p/ Entrega (<span class="count">0</span>)</h2>
+            <div class="pedido-list"></div>
+        </div>
+        <div class="column" data-status="finalizado">
+            <h2>Finalizado (<span class="count">0</span>)</h2>
+            <div class="pedido-list"></div>
+        </div>
+        <div class="column" data-status="cancelado">
+            <h2>Cancelado (<span class="count">0</span>)</h2>
+            <div class="pedido-list"></div>
+        </div>
+    </main>
+    <script src="../static/js/pageAdmin.js"></script>
+</body>
+
+</html>

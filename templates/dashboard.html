@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Pizzaria</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Dashboard Pizzaria</h1>
+</header>
+
+<section id="filtros">
+    <form method="POST">
+        <label>Data Início: <input type="date" name="dataInicio" value="{{ data_inicio }}"></label>
+        <label>Data Fim: <input type="date" name="dataFim" value="{{ data_fim }}"></label>
+        <button type="submit">Filtrar</button>
+    </form>
+</section>
+
+<section id="indicadores">
+    <div class="card">
+        <h3>Total de Pedidos</h3>
+        <p>{{ total_pedidos }}</p>
+    </div>
+    <div class="card">
+        <h3>Pedidos Finalizados</h3>
+        <p>{{ total_finalizados }}</p>
+    </div>
+    <div class="card">
+        <h3>Pedidos Cancelados</h3>
+        <p>{{ total_cancelados }}</p>
+    </div>
+    <div class="card">
+        <h3>Faturamento</h3>
+        <p>R$ {{ "%.2f"|format(faturamento) }}</p>
+    </div>
+</section>
+
+<section id="graficos">
+    <div class="grafico">
+        <h3>Pedidos por Status</h3>
+        <img src="data:image/png;base64,{{ grafico_status }}">
+    </div>
+    <div class="grafico">
+        <h3>Sabores Mais Pedidos</h3>
+        <img src="data:image/png;base64,{{ grafico_sabores }}">
+    </div>
+    <div class="grafico">
+        <h3>Faturamento Diário</h3>
+        <img src="data:image/png;base64,{{ grafico_faturamento }}">
+    </div>
+    <div class="grafico">
+        <h3>Dias da Semana com Mais Entregas</h3>
+        <img src="data:image/png;base64,{{ grafico_dias }}">
+    </div>
+</section>
+
+<section id="tabela">
+    <h3>Pedidos Detalhados</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Status</th>
+                <th>Data</th>
+                <th>Valor</th>
+                <th>Sabor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in pedidos %}
+            <tr>
+                <td>{{ pedido.id }}</td>
+                <td>{{ pedido.nome }}</td>
+                <td>{{ pedido.status }}</td>
+                <td>{{ pedido.data }}</td>
+                <td>{{ "%.2f"|format(pedido.valor) }}</td>
+                <td>{{ pedido.sabores }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+</body>
+</html>
+
