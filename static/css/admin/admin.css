@@ -1,7 +1,18 @@
+@font-face {
+    font-family: 'HeroesAssemble';
+    src: url("../../fonts/marvel/heroesassemble2.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #eee;
+    font-family: 'HeroesAssemble', Arial, sans-serif;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.02), rgba(0,0,0,0.02)),
+        url("../../img/global/background.png");
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 header {
@@ -20,17 +31,28 @@ header {
     display: flex;
     gap: 10px;
     padding: 10px;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
 }
 
 #pedido-input {
     flex: 1;
     padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button {
     padding: 8px;
     cursor: pointer;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover {
+    background: #555;
 }
 
 .board {
@@ -41,17 +63,19 @@ button {
 }
 
 .column {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.9);
     padding: 10px;
     flex: 1;
     min-width: 200px;
     display: flex;
     flex-direction: column;
+    border-radius: 6px; 
 }
 
 .column h2 {
     font-size: 16px;
     margin-bottom: 8px;
+    color: red;
 }
 
 .pedido-list {
@@ -67,4 +91,5 @@ button {
     padding: 6px;
     margin-bottom: 6px;
     cursor: grab;
+    border-radius: 4px; 
 }

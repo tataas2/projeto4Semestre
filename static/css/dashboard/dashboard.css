@@ -1,82 +1,122 @@
+@font-face {
+    font-family: 'HeroesAssemble';
+    src: url("../../fonts/marvel/heroesassemble2.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
     margin: 0;
+    font-family: 'HeroesAssemble', Arial, sans-serif;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.02), rgba(0,0,0,0.02)),
+        url("../../img/global/background.png");
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 header {
     background: #222;
     color: #fff;
-    text-align: center;
     padding: 12px;
+    text-align: center;
+    border-bottom: 2px solid #555;
 }
 
 #filtros {
-    padding: 10px;
-    background: #fff;
-}
-
-#filtros form {
     display: flex;
+    justify-content: center;
     gap: 10px;
-    flex-wrap: wrap;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+    margin: 10px;
 }
 
-button {
+#filtros input[type="date"] {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#filtros button {
     padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    background: red;
+    color: #fff;
     cursor: pointer;
+}
+
+#filtros button:hover {
+    background: #555;
 }
 
 #indicadores {
     display: flex;
     gap: 10px;
-    padding: 10px;
     flex-wrap: wrap;
+    padding: 100px;
 }
 
 .card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
     flex: 1;
-    min-width: 150px;
-    background: white;
-    padding: 12px;
+    min-width: 180px;
     border-radius: 6px;
     text-align: center;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
 }
 
-#graficos {
+#grafico, #graficos {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
+    flex-wrap: wrap;
     padding: 10px;
 }
 
 .grafico {
-    flex: 1;
-    min-width: 300px;
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
     padding: 10px;
+    flex: 1;
+    min-width: 200px;
     border-radius: 6px;
+    color: red;
     text-align: center;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    margin: 10px 0;
-}
-
-table, th, td {
     border: 1px solid #ccc;
 }
 
-th, td {
+.grafico img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+#tabela {
+    padding: 100px;
+    color: red;
+}
+
+#tabela table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+#tabela th, #tabela td {
     padding: 8px;
+    border: 1px solid #ccc;
     text-align: center;
 }
 
-th {
-    background: #eee;
+#tabela th {
+    background: #222;
+    color: #fff;
+}
+
+#tabela tbody tr:hover {
+    background: rgba(200, 200, 200, 0.3);
 }
