@@ -75,8 +75,6 @@ def cadastro():
         nome = request.form["nome"]
         cpf = request.form["cpf"]
         telefone = request.form["telefone"]
-        cep = request.form["cep"]
-        numResidencia = request.form["numResidencia"]
         senha = request.form["senha"]
 
         if any(u["telefone"] == telefone for u in users):
@@ -86,8 +84,6 @@ def cadastro():
             "nome": nome,
             "cpf": cpf,
             "telefone": telefone,
-            "cep": cep,
-            "numResidencia": numResidencia,
             "senha": senha
         })
 
