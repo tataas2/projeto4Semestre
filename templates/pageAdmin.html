@@ -13,6 +13,9 @@
     <header>
         <h1>Painel de Pedidos</h1>
         <div id="total-geral">Total do Dia: 0</div>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}" class="logout-btn"><br>Sair</a>
+
     </header>
 
     <section id="novo-pedido">
@@ -25,5 +28,23 @@
             <h2>Solicitado (<span class="count">0</span>)</h2>
             <div class="pedido-list"></div>
         </div>
+
         <div class="column" data-status="preparando">
             <h2>Preparando (<span class="count">0</span>)</h2>
+            <div class="pedido-list"></div>
+        </div>
+
+        <div class="column" data-status="pronto">
+            <h2>Pronto (<span class="count">0</span>)</h2>
+            <div class="pedido-list"></div>
+        </div>
+
+        <div class="column" data-status="entregue">
+            <h2>Entregue (<span class="count">0</span>)</h2>
+            <div class="pedido-list"></div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/admin/admin.js') }}"></script>
+</body>
+</html>

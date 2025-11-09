@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet"> <!-- Scripts -->
 
     <!-- CSS -->
- 
+
     <link rel="stylesheet" type="text/css" href="../static/css/global.css">
     <link rel="stylesheet" type="text/css" href="../static/css/cadastro/cadastro.css">
 
@@ -29,18 +29,36 @@
                     <div class="innerBordCadastro"></div>
                     <div class="innerTextCadastro">
                         <p>Cadastre-se</p>
-                    </div> <span> <label for="nome">Nome:</label> <input type="text" class="inputCadastro" id="nome"
-                            name="nome" required> </span> <span> <label for="cpf">CPF:</label> <input type="text"
-                            class="inputCadastro" id="cpf" name="cpf" required> </span> <span> <label
-                            for="telefone">Telefone:</label> <input type="tel" class="inputCadastro" id="telefone"
-                            for="senha">Senha:</label> <input type="password" class="inputCadastro" id="senha"
-                            name="senha" required> </span> <button class="botaoCadastro"
-                        type="submit">Cadastrar</button>
+                    </div>
+
+                    <span>
+                        <label for="nome">Nome:</label>
+                        <input type="text" class="inputCadastro" id="nome" name="nome" required>
+                    </span>
+
+                    <span>
+                        <label for="cpf">CPF:</label>
+                        <input type="text" class="inputCadastro" id="cpf" name="cpf" required>
+                    </span>
+
+                    <span>
+                        <label for="telefone">Telefone:</label>
+                        <input type="tel" class="inputCadastro" id="telefone" name="telefone" required>
+                    </span>
+
+                    <span>
+                        <label for="senha">Senha:</label>
+                        <input type="password" class="inputCadastro" id="senha" name="senha" required>
+                    </span>
+
+                    <button class="botaoCadastro" type="submit">Cadastrar</button>
+
                     <div class="loginMudanca">
-                        <p>Já tem uma conta?
+                        <p>Já tem uma conta?</p>
                         <p class="loginLinkMudanca" onclick="cadastroPLogin()">Login</p>
                     </div>
                 </form>
+
             </section> <!-- LOGIN -->
             <section class="login" id="login">
                 <form action="{{ url_for('login') }}" method="POST">
@@ -50,7 +68,7 @@
                     </div> <span> <label for="telefoneLogin">Telefone:</label> <input type="tel" class="inputCadastro"
                             id="telefoneLogin" name="telefone" required> </span> <span> <label
                             for="senhaLogin">Senha:</label> <input type="password" class="inputCadastro" id="senhaLogin"
-                            name="senha" required> </span> <button class="loginBotao" type="submit" >Entrar</button>
+                            name="senha" required> </span> <button class="loginBotao" type="submit">Entrar</button>
                     <div class="loginMudanca">
                         <p>Ainda não tem uma conta?
                         <p class="loginLinkMudanca" onclick="loginPCadastro()">Cadastro</p>
