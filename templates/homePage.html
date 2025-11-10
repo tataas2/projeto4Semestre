@@ -7,6 +7,7 @@
     <title>Home - Pizzaria do Stan</title>
 
     <!-- Estilos -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/global.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/cardapio/cardapio.css') }}">
 
@@ -137,8 +138,14 @@
     </aside>
 
     <!-- Script Carrinho -->
+
+    <div class="logoutContainer">
+         <!-- Ícone de Logout -->
+    <a href="{{ url_for('logout') }}" class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
     <script src="{{ url_for('static', filename='js/carrinho.js') }}"></script>
-    <a href="{{ url_for('logout') }}" class="logout-btn">Sair</a>
+    </div>
 
 </body>
 </html>
