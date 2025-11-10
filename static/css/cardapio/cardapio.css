@@ -192,7 +192,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative; /* os spans serão relativos à imagem */
+    position: relative;
 }
 
 .cardapio img.cardapio-img {
@@ -226,54 +226,71 @@
 /* ==================== CARRINHO ==================== */
 #openCarrinhoBtn {
     position: fixed;
-    right: 20px;
-    bottom: 20px;
-    background: #e63946;
-    color: #fff;
-    padding: 12px 18px;
-    border-radius: 8px;
+    right: 25px;
+    bottom: 25px;
+    background: red;
+    color: white;
+    font-family: 'HeroesAssemble';
+    font-size: 20px;
+    padding: 12px 22px;
     border: none;
-    font-size: 16px;
+    border-radius: 12px;
     cursor: pointer;
+    box-shadow: 0 0 12px rgba(255,0,0,0.6);
+    transition: all 0.3s ease;
     z-index: 999;
+}
+
+#openCarrinhoBtn:hover {
+    transform: scale(1.1);
+    background: #ff1f3c;
+    box-shadow: 0 0 20px rgba(255,0,0,0.8);
 }
 
 #closeCarrinhoBtn {
     position: fixed;
     right: -999px;
-    top: 15px;
+    top: 25px;
     background: transparent;
-    font-size: 22px;
+    font-size: 24px;
     border: none;
     color: white;
     cursor: pointer;
+    transition: right 0.4s ease;
     z-index: 1000;
 }
 
 #carrinhoAside.aberto + #closeCarrinhoBtn,
-#closeCarrinhoBtn.mostrar { right: 380px; }
+#closeCarrinhoBtn.mostrar { right: 400px; }
 
 #carrinhoAside {
     position: fixed;
     top: 0;
-    right: -380px;
-    width: 360px;
+    right: -400px;
+    width: 380px;
     height: 100vh;
-    background: #111;
-    color: #fff;
-    padding: 20px;
-    box-shadow: -5px 0 10px rgba(0,0,0,0.4);
+    background: radial-gradient(circle at top left, #111 40%, #222);
+    color: white;
+    padding: 25px;
+    box-shadow: -6px 0 15px rgba(0,0,0,0.6);
     transition: right 0.4s ease;
     z-index: 998;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 #carrinhoAside.aberto { right: 0; }
 
-#carrinhoAside h2 { text-align: center; margin-bottom: 15px; }
+#carrinhoAside h2 {
+    text-align: center;
+    color: red;
+    font-family: 'HeroesAssemble';
+    font-size: 28px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
 
 #carrinhoAside ul {
     padding: 0;
@@ -281,14 +298,16 @@
 }
 
 #carrinhoAside li {
-    background: #222;
-    padding: 8px;
-    margin-bottom: 6px;
-    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,0,0,0.3);
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 0.95em;
+    font-family: "Delius", cursive;
 }
 
 #carrinhoAside li span {
@@ -298,49 +317,98 @@
 }
 
 #carrinhoAside li button {
-    background: #e63946;
-    color: #fff;
+    background: red;
+    color: white;
     border: none;
     border-radius: 4px;
-    padding: 2px 6px;
+    padding: 3px 6px;
     cursor: pointer;
-    font-size: 0.8em;
-    transition: background 0.2s ease;
+    font-size: 0.85em;
+    font-family: 'HeroesAssemble';
+    transition: background 0.3s ease;
 }
 
 #carrinhoAside li button:hover {
     background: #ff1f3c;
 }
 
-.carrinho-totais {
-    border-top: 1px solid #333;
-    padding-top: 10px;
+#carrinhoAside label {
+    font-family: 'HeroesAssemble';
+    color: red;
+    font-size: 15px;
+    display: block;
     margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-   
 }
 
-.carrinho-totais div {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1em;
-}
-
-#carrinhoAside button.confirmar {
+#carrinhoAside input,
+#carrinhoAside select {
     width: 100%;
-    background: #e63946;
-    border: none;
-    padding: 10px;
-    margin-top: 10px;
+    padding: 8px;
+    margin-top: 4px;
     border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    font-family: "Delius", cursive;
 }
 
-#carrinhoAside button.confirmar:hover {
-    background: #ff1f3c;
+#carrinhoAside hr {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    margin: 10px 0;
 }
+
+#carrinhoAside p {
+    font-family: "Delius", cursive;
+    font-size: 15px;
+    margin: 6px 0;
+}
+
+#carrinhoAside p strong {
+    font-family: 'HeroesAssemble';
+    color: red;
+}
+
+#confirmarCompra {
+    width: 100%;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 18px;
+    font-family: 'HeroesAssemble';
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+#confirmarCompra:hover {
+    background: #ff1f3c;
+    box-shadow: 0 0 15px rgba(255,0,0,0.7);
+}
+
+#buscarCEP {
+    width: 60%; 
+    padding: 8px; 
+    background: white;
+    color: red;
+    border: none;
+    border-radius: 8px;
+    font-family: 'HeroesAssemble', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px auto 0 auto; 
+    display: block; 
+}
+
+#buscarCEP:hover {
+    background: #333333;
+    box-shadow: 0 0 10px rgba(255,0,0,0.6);
+}
+
 
 /* ==================== BOTÕES ADICIONAIS ==================== */
 .cardapio-container {
