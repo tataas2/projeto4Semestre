@@ -25,25 +25,58 @@
 
     <main class="board">
         <div class="column" data-status="solicitado">
-            <h2>Solicitado (<span class="count">0</span>)</h2>
-            <div class="pedido-list"></div>
+            <h2>Solicitado (<span class="count">{{ pedidos | selectattr('status', 'equalto', 'Solicitado') | list | length }}</span>)</h2>
+            <div class="pedido-list">
+                {% for p in pedidos if p.status == 'Solicitado' %}
+                    <div class="pedido-card">
+                        <p><b>#{{ p.id }}</b> - {{ p.cliente }}</p>
+                        <p>R$ {{ "%.2f"|format(p.valor or 0) }}</p>
+                        <p><small>{{ p.data.strftime('%d/%m %H:%M') if p.data }}</small></p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
 
         <div class="column" data-status="preparando">
-            <h2>Preparando (<span class="count">0</span>)</h2>
-            <div class="pedido-list"></div>
+            <h2>Preparando (<span class="count">{{ pedidos | selectattr('status', 'equalto', 'Preparando') | list | length }}</span>)</h2>
+            <div class="pedido-list">
+                {% for p in pedidos if p.status == 'Preparando' %}
+                    <div class="pedido-card">
+                        <p><b>#{{ p.id }}</b> - {{ p.cliente }}</p>
+                        <p>R$ {{ "%.2f"|format(p.valor or 0) }}</p>
+                        <p><small>{{ p.data.strftime('%d/%m %H:%M') if p.data }}</small></p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
 
         <div class="column" data-status="pronto">
-            <h2>Pronto (<span class="count">0</span>)</h2>
-            <div class="pedido-list"></div>
+            <h2>Pronto (<span class="count">{{ pedidos | selectattr('status', 'equalto', 'Pronto') | list | length }}</span>)</h2>
+            <div class="pedido-list">
+                {% for p in pedidos if p.status == 'Pronto' %}
+                    <div class="pedido-card">
+                        <p><b>#{{ p.id }}</b> - {{ p.cliente }}</p>
+                        <p>R$ {{ "%.2f"|format(p.valor or 0) }}</p>
+                        <p><small>{{ p.data.strftime('%d/%m %H:%M') if p.data }}</small></p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
 
         <div class="column" data-status="entregue">
-            <h2>Entregue (<span class="count">0</span>)</h2>
-            <div class="pedido-list"></div>
+            <h2>Entregue (<span class="count">{{ pedidos | selectattr('status', 'equalto', 'Entregue') | list | length }}</span>)</h2>
+            <div class="pedido-list">
+                {% for p in pedidos if p.status == 'Entregue' %}
+                    <div class="pedido-card">
+                        <p><b>#{{ p.id }}</b> - {{ p.cliente }}</p>
+                        <p>R$ {{ "%.2f"|format(p.valor or 0) }}</p>
+                        <p><small>{{ p.data.strftime('%d/%m %H:%M') if p.data }}</small></p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </main>
+
 
     <script src="{{ url_for('static', filename='js/admin/admin.js') }}"></script>
 </body>

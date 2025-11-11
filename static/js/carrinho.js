@@ -89,16 +89,45 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Confirmar compra
-    document.getElementById("confirmarCompra").onclick = () => {
-        if (carrinho.length === 0) return alert("O carrinho está vazio!");
+    // Confirmar compra
+    document.getElementById("confirmarCompra").onclick = async () => {
+        if (carrinho.length === 0) {
+            alert("O carrinho está vazio!");
+            return;
+        }
 
         const total = carrinho.reduce((acc, item) => acc + item.preco * item.qtd, 0);
-        const texto = `🦸 Pedido Pizzaria do Stan 🦸\n\n${
-            carrinho.map(i => `• ${i.nome} — R$ ${i.preco.toFixed(2)} x ${i.qtd} = R$ ${(i.preco*i.qtd).toFixed(2)}`).join("\n")
-        }\n\nEntrega: R$ ${frete.toFixed(2)}\nTotal Final: R$ ${(total+frete).toFixed(2)}`;
 
-        const win = window.open("", "_blank");
-        win.document.write(`<pre>${texto}</pre>`);
-        win.print();
+        // Monta o objeto do pedido
+        const pedidoData = {
+            valor_total: (total + frete).toFixed(2),
+            itens: carrinho.map(i => ({
+                nome: i.nome,
+                preco: i.preco,
+                quantidade: i.qtd
+            }))
+        };
+
+
+        try {
+            const resp = await fetch("/salvar_pedido", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(pedidoData)
+            });
+
+            if (resp.ok) {
+                const data = await resp.json();
+                alert(`✅ Pedido confirmado!\nNúmero do pedido: ${data.idPedido}`);
+                carrinho = [];
+                atualizarCarrinho();
+            } else {
+                alert("❌ Erro ao salvar o pedido. Tente novamente.");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("⚠️ Falha de comunicação com o servidor.");
+        }
     };
+
 });
