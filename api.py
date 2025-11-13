@@ -229,8 +229,6 @@ def pageAdmin():
             LEFT JOIN Cliente c ON p.idCliente = c.idCliente
             ORDER BY p.data_pedido DESC;
         """
-
-        import pandas as pd
         df = pd.read_sql(query, conn)
         conn.close()
 
