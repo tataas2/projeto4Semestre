@@ -1,0 +1,64 @@
+@font-face {
+  font-family: 'HeroesAssemble';
+  src: url('../fonts/marvel/heroesassemble2.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+    /* Altura, Largura e Regras de posição */
+    margin: 0;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
+    /* Cores e Decorações */
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.02), rgba(0,0,0,0.02)),
+        url('../img/global/background.png');
+    font-family: 'HeroesAssemble';
+
+    /* Animações */
+}
+
+.container {
+    /* Altura, Largura e Regras de posição */
+    width: 100%;
+    gap: 40px;
+    overflow: hidden;
+
+    /* Cores e Decorações */
+
+    /* Animações */
+}
+
+
+.logoutContainer {
+    display: flex;
+    justify-content: center; /* Centraliza horizontal */
+    align-items: center;     /* Centraliza vertical (se tiver altura) */
+    width: 100%;             /* Ocupa a largura da página */
+        
+}
+
+.logout-btn {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    font-size: 22px;
+    color: #ffffff;
+    background-color: #ff3b3bb6;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: 0.3s;
+    margin-bottom: 30px;
+}
+
+.logout-btn:hover {
+    background-color: #3a0d0d;
+    transform: scale(1.15);
+    cursor: pointer;
+}
+

@@ -1,0 +1,7 @@
+id,nome,status,data,valor,sabores
+1,Ana,finalizado,2025-11-01,45.50,Calabresa,Mussarela
+2,Bruno,solicitado,2025-11-01,32.00,Portuguesa
+3,Carla,preparando,2025-11-02,50.00,Frango,Catupiry
+4,Daniel,finalizado,2025-11-02,60.00,Marguerita
+5,Elisa,cancelado,2025-11-02,28.00,Quatro Queijos
+
