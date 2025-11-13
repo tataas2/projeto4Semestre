@@ -1,64 +1,71 @@
-let pedidos = Array.isArray(JSON.parse(localStorage.getItem("pedidos"))) ? JSON.parse(localStorage.getItem("pedidos")) : [];
+// pageAdmin.js — mover pedidos entre colunas e atualizar status no banco
 
-function salvar() {
-    localStorage.setItem("pedidos", JSON.stringify(pedidos));
-}
-
-function atualizarContadores() {
-    document.querySelectorAll(".column").forEach(col => {
-        const status = col.dataset.status;
-        const total = pedidos.filter(p => p.status === status).length;
-        col.querySelector(".count").textContent = total;
-    });
-
-    document.getElementById("total-geral").textContent = `Total do Dia: ${pedidos.length}`;
-}
-
-function desenhar() {
-    document.querySelectorAll(".pedido-list").forEach(list => list.innerHTML = "");
-
-    pedidos.forEach(p => {
-        const div = document.createElement("div");
-        div.classList.add("pedido");
-        div.textContent = p.nome;
-        div.draggable = true;
-        div.dataset.id = p.id;
-
-        div.addEventListener("dragstart", e => {
-            e.dataTransfer.setData("id", p.id);
-        });
-
-        document.querySelector(`[data-status="${p.status}"] .pedido-list`).appendChild(div);
-    });
-
-    atualizarContadores();
-}
-
-document.getElementById("add-btn").onclick = () => {
-    const input = document.getElementById("pedido-input");
-    if (!input.value.trim()) return;
-
-    pedidos.push({
-        id: Date.now(),
-        nome: input.value.trim(),
-        status: "solicitado"
-    });
-
-    input.value = "";
-    salvar();
-    desenhar();
-};
-
-document.querySelectorAll(".pedido-list").forEach(area => {
-    area.addEventListener("dragover", e => e.preventDefault());
-    area.addEventListener("drop", e => {
-        const id = e.dataTransfer.getData("id");
-        const pedido = pedidos.find(p => p.id == id);
-        pedido.status = area.parentElement.dataset.status;
-        salvar();
-        desenhar();
+// Torna os cards arrastáveis
+document.querySelectorAll(".pedido-card").forEach(card => {
+    card.draggable = true;
+    card.addEventListener("dragstart", e => {
+        const idTexto = card.querySelector("b").textContent.trim(); // ex: "#21"
+        const id = idTexto.replace("#", "");
+        e.dataTransfer.setData("id", id);
     });
 });
-localStorage.removeItem("pedidos");
 
-desenhar();
+// Permite soltar nas colunas
+document.querySelectorAll(".pedido-list").forEach(area => {
+    area.addEventListener("dragover", e => e.preventDefault());
+
+    area.addEventListener("drop", e => {
+        const id = e.dataTransfer.getData("id");
+        const novoStatus = area.parentElement.dataset.status;
+
+        // Busca o card correspondente pelo número do pedido
+        const cards = document.querySelectorAll(".pedido-card");
+        const card = Array.from(cards).find(c => 
+            c.querySelector("b").textContent.replace("#", "").trim() === id
+        );
+
+        if (card) {
+            area.appendChild(card);
+            atualizarStatusNoBanco(id, novoStatus);
+            atualizarContadores();
+        }
+    });
+});
+
+// Atualiza os números nas colunas
+function atualizarContadores() {
+    document.querySelectorAll(".column").forEach(col => {
+        const count = col.querySelectorAll(".pedido-card").length;
+        col.querySelector(".count").textContent = count;
+    });
+
+    const total = document.querySelectorAll(".pedido-card").length;
+    document.getElementById("total-geral").textContent = `Total do Dia: ${total}`;
+}
+
+// Faz a requisição ao Flask pra salvar a mudança de status
+function atualizarStatusNoBanco(idPedido, novoStatus) {
+    fetch("/atualizar_status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            id_pedido: idPedido,
+            novo_status: capitalizarStatus(novoStatus)
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log("✅ Status atualizado:", data);
+    })
+    .catch(err => {
+        console.error("❌ Erro ao atualizar status:", err);
+    });
+}
+
+// Coloca a primeira letra do status em maiúsculo
+function capitalizarStatus(status) {
+    return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
+}
+
+// Atualiza os contadores ao carregar a página
+atualizarContadores();

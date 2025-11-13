@@ -240,6 +240,23 @@ def pageAdmin():
 
     pedidos = df.to_dict(orient="records")
     return render_template("pageAdmin.html", pedidos=pedidos)
+@app.route("/atualizar_status", methods=["POST"])
+def atualizar_status():
+    data = request.get_json()
+    id_pedido = data.get("id_pedido")
+    novo_status = data.get("novo_status")
+
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute("UPDATE Pedido SET status = %s WHERE idPedido = %s", (novo_status, id_pedido))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify({"mensagem": "Status atualizado com sucesso!"})
+    except Exception as e:
+        print("Erro ao atualizar status:", e)
+        return jsonify({"erro": str(e)}), 500
 
 
 # DASHBOARD
