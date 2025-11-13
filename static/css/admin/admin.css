@@ -83,6 +83,7 @@ button:hover {
     border: 1px dashed #aaa;
     min-height: 60px;
     padding: 6px;
+      cursor: pointer;
 }
 
 .pedido {
@@ -92,4 +93,5 @@ button:hover {
     margin-bottom: 6px;
     cursor: grab;
     border-radius: 4px; 
+      cursor: pointer;
 }
