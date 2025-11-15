@@ -1,0 +1,63 @@
+*# ===============================
+# PYTHON
+# ===============================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+
+# Configs e arquivos temporários
+*.log
+*.pot
+*.pid
+*.sqlite3
+
+# ===============================
+# FLASK
+# ===============================
+instance/
+*.db
+.env
+.env.*
+
+# ===============================
+# EDITOR / IDE
+# ===============================
+.vscode/
+.idea/
+
+# ===============================
+# SISTEMA OPERACIONAL
+# ===============================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+
+# Linux
+*.swp
+
+# ===============================
+# FRONT-END
+# ===============================
+node_modules/
+dist/
+build/
+
+# ===============================
+# OUTROS
+# ===============================
+
+# Arquivos gerados automaticamente
+*.bak
+*.tmp
+
+# Cache do navegador (às vezes aparece no repo)
+cache/
