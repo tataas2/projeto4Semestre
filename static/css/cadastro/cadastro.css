@@ -4,13 +4,12 @@
     align-items: center;
     justify-content: center;
     gap: 30px;
-    margin-top: 20vh;
+    margin-top: 25vh;
 
     /* Cores e Decorações */
 
     /* Animações */
 }
-
 
 .cadastro  {
     /* Altura, Largura e Regras de posição */
@@ -49,7 +48,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-      
+        gap: 10px;
     }
     .innerBordCadastro {
         /* Altura, Largura e Regras de posição */
@@ -122,7 +121,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-      
+        gap: 10px;
     }
     .innerBordLogin {
         /* Altura, Largura e Regras de posição */
@@ -199,8 +198,8 @@
 .loginBotao {
     /* Altura, Largura e Regras de posição */
     margin-left: 320px;
-    margin-top: 55px;
-    height: 45px;
+    margin-top: 46px;
+    height: 46px;
     width: 100px;
     position: absolute;
 

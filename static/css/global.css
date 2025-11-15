@@ -8,6 +8,10 @@
 body {
     /* Altura, Largura e Regras de posição */
     margin: 0;
+  
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 
     /* Cores e Decorações */
     background-image: 
@@ -21,8 +25,6 @@ body {
 .container {
     /* Altura, Largura e Regras de posição */
     width: 100%;
-    align-items: center;
-    justify-content: center;
     gap: 40px;
     overflow: hidden;
 
@@ -60,4 +62,3 @@ body {
     transform: scale(1.15);
     cursor: pointer;
 }
-
