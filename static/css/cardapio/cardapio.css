@@ -12,6 +12,10 @@
 }
 
 /* ==================== SEÇÃO STAN ==================== */
+html, body {
+  overflow-x: hidden;
+}
+
 .secaoStan {
     height: 800px;
     display: flex;
@@ -60,7 +64,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 200px;
+    gap: 150px;
+    margin-left: 5px;
 }
 
 .guardEndereco {
@@ -206,22 +211,127 @@
     position: absolute;
     display: block;
     cursor: pointer;
-    width: 120px;  
-    height: 50px;  
+    width: 460px;  
+    height: 115px;
 }
 
+.secaoContato {
+    margin-top: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+    .contato {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 950px;
+        height: 440px;
+        background-color: #333333;
+        overflow: hidden;
+    }
+
+        .contato p {
+            font-style: italic;
+            text-align: center;
+            color: white;
+            font-size: 30px;
+            z-index: 2;
+        }
+
+        .contato a {
+            text-decoration: none;
+        }
+
+        .imgContatoRight {
+            position: absolute;
+            margin-top: 300px;
+            margin-right: 800px;
+        }
+
+        .imgContatoLeft {
+            position: absolute;
+            margin-bottom: 200px;
+            margin-left: 700px;
+        }
+
+    .innerBordContato {
+        position: absolute;
+        z-index: 1;
+        border: 3px solid white;
+        width: 905px;
+        height: 395px;
+    }
+
+    .innerTextContato {
+        /* Altura, Largura e Regras de posição */
+        width: 100px;
+        height: 20px;
+        margin-bottom: 395px;
+        position: absolute;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+
+        /* Cores e Decorações */
+        background-color: #333333;
+
+        /* Animações */
+    }
+
+        .innerTextContato p {
+            font-size: 25px;
+            color: red;
+        }
+
+    .redesSociais {
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 100px;
+        width: 700px;
+        height: 200px;
+    }
+
+        .cardRede {
+            font-family: "Delius", cursive;
+            color: white;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid transparent;
+            width: 150px;
+            height: 200px;
+        }
+
+        .cardRede p {
+            font-weight: 100;
+            font-style: normal;
+            text-decoration: underline;
+        }
+
 /* ==================== POSICIONAMENTO DOS ITENS ==================== */
-#hulkEsmaga { top: 134px; left: 569px; }
-#souGroot { top: 268px; left: 569px; }
-#playboyBilionario { top: 409px; left: 569px; }
-#grandesPoderes { top: 190px; left: 1030px; }
-#vingadoresAvante { top: 365px; left: 1030px; }
-#gamora { top: 879px; left: 560px; }
-#romanoff { top: 994px; left: 559px; }
-#maximoff { top: 1140px; left: 563px; }
-#inevitavel { top: 880px; left: 1020px; }
-#fury { top: 995px; left: 1020px; }
-#refri { top: 1124px; left: 1020px; }
+#hulkEsmaga { top: 125px; left: 300px; }
+#souGroot { top: 260px; left: 300px; }
+#playboyBilionario { top: 403px; left: 300px; }
+#grandesPoderes { top: 190px; left: 780px; width: 450px; height: 155px; }
+#vingadoresAvante { top: 365px; left: 780px; width: 440px; height: 185px; }
+#gamora { top: 850px; left: 300px; }
+#romanoff { top: 990px; left: 300px; }
+#maximoff { top: 1120px; left: 300px; }
+#inevitavel { top: 850px; left: 795px; width: 430px; height: 115px; }
+#fury { top: 975px; left: 795px; width: 430px; height: 120px; }
+#refri { top: 1115px; left: 795px; width: 430px; height: 120px;}
 
 /* ==================== CARRINHO ==================== */
 #openCarrinhoBtn {
@@ -249,7 +359,7 @@
 
 #closeCarrinhoBtn {
     position: fixed;
-    right: -999px;
+    right: -99999999px;
     top: 25px;
     background: transparent;
     font-size: 24px;
@@ -261,12 +371,12 @@
 }
 
 #carrinhoAside.aberto + #closeCarrinhoBtn,
-#closeCarrinhoBtn.mostrar { right: 400px; }
+#closeCarrinhoBtn.mostrar { right: 390px; }
 
 #carrinhoAside {
     position: fixed;
     top: 0;
-    right: -400px;
+    right: -1000px;
     width: 380px;
     height: 100vh;
     background: radial-gradient(circle at top left, #111 40%, #222);
@@ -289,7 +399,7 @@
     font-family: 'HeroesAssemble';
     font-size: 28px;
     letter-spacing: 2px;
-    margin-bottom: 12px;
+    margin-bottom: 5px;
 }
 
 #carrinhoAside ul {
@@ -301,7 +411,7 @@
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,0,0,0.3);
     padding: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
@@ -382,6 +492,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 10px;
+      margin-bottom: 7px;
 }
 
 #confirmarCompra:hover {
@@ -429,4 +540,8 @@
     cursor: pointer;
     font-weight: bold;
     font-size: 18px;
+}
+#iconcarrinho {
+    width: 30px;
+    height: 30px;
 }
