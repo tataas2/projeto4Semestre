@@ -10,24 +10,29 @@ import os
 from db import get_connection
 from datetime import date, datetime
 import logging
-
+import bcrypt
+import secrets
 
 sns.set(style="whitegrid")
 
+# ---------------------------------------------
+# CONFIGURAÇÃO DO FLASK
+# ---------------------------------------------
 app = Flask(
     __name__,
     template_folder=os.path.join(os.path.dirname(__file__), "templates"),
     static_folder=os.path.join(os.path.dirname(__file__), "static")
 )
 
-app.secret_key = 'chave_secreta_super_segura'
+# Chave segura para sessões
+app.secret_key = secrets.token_hex(32)
 
-# Usuário admin
+# Usuário admin padrão, para equipe de desenvolvimento
 ADMIN_USER = {"nome": "admin", "senha": "admin123"}
 
-# -------------------------
-# Função para gerar gráfico
-# -------------------------
+# ---------------------------------------------
+# Função para gerar gráficos em base64
+# ---------------------------------------------
 def gerar_grafico_base64(figura):
     img = BytesIO()
     figura.savefig(img, format='png', bbox_inches='tight')
@@ -36,86 +41,89 @@ def gerar_grafico_base64(figura):
     plt.close(figura)
     return grafico_base64
 
-# -------------------------
-# ROTAS
-# -------------------------
 
+# ---------------------------------------------
 # LOGIN
+# ---------------------------------------------
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         usuario = request.form.get("usuario") or request.form.get("telefone")
         senha = request.form.get("senha")
 
-        # 🔹 Login do administrador
+        # Login ADMIN
         if usuario == ADMIN_USER["nome"] and senha == ADMIN_USER["senha"]:
             session["user"] = ADMIN_USER["nome"]
             session["is_admin"] = True
             return redirect(url_for("pageAdmin"))
 
-        # 🔹 Login de cliente (busca no banco)
+        # Login CLIENTE com hash
         try:
             conn = get_connection()
             cur = conn.cursor()
 
-            # Verifica se o usuário existe (pode logar por nome OU telefone)
             query = """
-                SELECT idCliente, nome, telefone 
+                SELECT idCliente, nome, telefone, senha
                 FROM Cliente
-                WHERE (nome = %s OR telefone = %s) AND senha = %s;
+                WHERE nome = %s OR telefone = %s;
             """
-            cur.execute(query, (usuario, usuario, senha))
+            cur.execute(query, (usuario, usuario))
             cliente = cur.fetchone()
 
             cur.close()
             conn.close()
 
             if cliente:
-                session["id_cliente"] = cliente[0]  # ✅ salva o ID do cliente
-                session["user"] = cliente[1]        # nome do cliente
-                session["is_admin"] = False
-                logging.info(f"Cliente logado: {cliente[1]} (id {cliente[0]})")
-                return redirect(url_for("home"))
-            else:
-                return render_template("cadastro.html", erro_login="Usuário ou senha inválidos.")
+                senha_hash = cliente[3]
 
+                if bcrypt.checkpw(senha.encode('utf-8'), senha_hash.encode('utf-8')):
+                    # Login OK
+                    session["id_cliente"] = cliente[0]
+                    session["user"] = cliente[1]
+                    session["is_admin"] = False
+                    return redirect(url_for("home"))
+                else:
+                    return render_template("cadastro.html", erro_login="Senha incorreta.")
+
+            return render_template("cadastro.html", erro_login="Usuário não encontrado.")
 
         except Exception as e:
             print("Erro ao conectar no banco:", e)
-            return render_template("cadastro.html", erro_login="Erro no servidor, tente novamente.")
-    
-    # GET: mostra a página de login
+            return render_template("cadastro.html", erro_login="Erro no servidor.")
+
     return render_template("cadastro.html")
 
-# CADASTRO
-@app.route("/cadastro", methods=["GET", "POST"])
 
+# ---------------------------------------------
+# CADASTRO
+# ---------------------------------------------
+@app.route("/cadastro", methods=["GET", "POST"])
 def cadastro():
     if request.method == "POST":
         nome = request.form["nome"]
-        cpf = request.form["cpf"]
+        cpf = request.form.get("cpf")
         telefone = request.form["telefone"]
         senha = request.form["senha"]
+
+        # Criptografa a senha
+        senha_hash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
         try:
             conn = get_connection()
             cur = conn.cursor()
 
-            # Verifica se o telefone já existe
+            # Verifica telefone duplicado
             cur.execute("SELECT idCliente FROM Cliente WHERE telefone = %s;", (telefone,))
-            existente = cur.fetchone()
-
-            if existente:
+            if cur.fetchone():
                 cur.close()
                 conn.close()
                 return render_template("cadastro.html", erro_cadastro="Telefone já cadastrado.")
 
-            # Faz o INSERT
             query = """
                 INSERT INTO Cliente (nome, email, telefone, endereco, bairro, numero_residencia, complemento, cpf, senha)
                 VALUES (%s, NULL, %s, NULL, NULL, NULL, NULL, NULL, %s);
             """
-            cur.execute(query, (nome, telefone, senha))
+            cur.execute(query, (nome, telefone, senha_hash))
             conn.commit()
 
             cur.close()
@@ -125,20 +133,23 @@ def cadastro():
 
         except Exception as e:
             print("Erro ao cadastrar cliente:", e)
-            return render_template("cadastro.html", erro_cadastro="Erro ao cadastrar. Tente novamente mais tarde.")
+            return render_template("cadastro.html", erro_cadastro="Erro ao cadastrar.")
 
-    # GET → renderiza o formulário
     return render_template("cadastro.html")
 
 
+# ---------------------------------------------
 # LOGOUT
+# ---------------------------------------------
 @app.route("/logout")
 def logout():
-    session.pop("user", None)
-    session.pop("is_admin", None)
+    session.clear()
     return redirect(url_for("login"))
 
-# HOME PARA USUÁRIO COMUM
+
+# ---------------------------------------------
+# HOME DO CLIENTE
+# ---------------------------------------------
 @app.route("/home")
 def home():
     if "user" not in session:
@@ -147,6 +158,10 @@ def home():
         return redirect(url_for("pageAdmin"))
     return render_template("homePage.html", user=session["user"])
 
+
+# ---------------------------------------------
+# SALVAR PEDIDO
+# ---------------------------------------------
 @app.route("/salvar_pedido", methods=["POST"])
 def confirmar_pedido():
     data = request.get_json()
@@ -155,69 +170,57 @@ def confirmar_pedido():
 
     id_cliente = session.get("id_cliente")
     if not id_cliente:
-        logging.warning("Tentativa de pedido sem usuário autenticado.")
         return jsonify({"erro": "Usuário não autenticado"}), 401
 
-    conn = None
     try:
-        logging.info(f"Iniciando criação de pedido para cliente {id_cliente}")
         conn = get_connection()
         cur = conn.cursor()
 
-        # 1️⃣ Criar entrega
+        # Criar entrega
         cur.execute("""
             INSERT INTO Entrega (idCliente, data_entrega)
             VALUES (%s, %s)
             RETURNING idEntrega
         """, (id_cliente, date.today()))
         id_entrega = cur.fetchone()[0]
-        logging.info(f"Entrega criada com id {id_entrega}")
 
-        # 2️⃣ Criar pedido
+        # Criar pedido
         cur.execute("""
             INSERT INTO Pedido (data_pedido, idCliente, idEntrega, valor_total, status)
             VALUES (%s, %s, %s, %s, %s)
             RETURNING idPedido
         """, (datetime.now(), id_cliente, id_entrega, valor_total, "Solicitado"))
         id_pedido = cur.fetchone()[0]
-        logging.info(f"Pedido criado com id {id_pedido}")
 
-        # 3️⃣ Inserir itens
+        # Itens
         for item in itens:
-            logging.info(f"Inserindo item: {item}")
             cur.execute("""
                 INSERT INTO ItemPedido (idPedido, idProduto, quantidade, preco_unitario)
                 SELECT %s, idProduto, %s, %s FROM Produto WHERE nome = %s
             """, (id_pedido, item["quantidade"], item["preco"], item["nome"]))
-            if cur.rowcount == 0:
-                raise Exception(f"Produto '{item['nome']}' não encontrado.")
 
         conn.commit()
-        logging.info(f"Pedido {id_pedido} salvo com sucesso!")
-
-        return jsonify({"mensagem": "Pedido salvo com sucesso!", "idPedido": id_pedido})
+        return jsonify({"mensagem": "Pedido salvo!", "idPedido": id_pedido})
 
     except Exception as e:
-        if conn:
-            conn.rollback()
-        logging.exception("Erro ao salvar pedido:")
+        conn.rollback()
         return jsonify({"erro": str(e)}), 500
 
     finally:
-        if conn:
-            cur.close()
-            conn.close()
+        cur.close()
+        conn.close()
 
+
+# ---------------------------------------------
 # PÁGINA ADMIN
+# ---------------------------------------------
 @app.route("/pageAdmin")
 def pageAdmin():
     if "user" not in session or not session.get("is_admin"):
         return redirect(url_for("login"))
 
     try:
-        from db import get_connection
         conn = get_connection()
-
         query = """
             SELECT 
                 p.idPedido AS id,
@@ -232,12 +235,16 @@ def pageAdmin():
         df = pd.read_sql(query, conn)
         conn.close()
 
-    except Exception as e:
-        print("Erro ao carregar pedidos:", e)
+    except Exception:
         df = pd.DataFrame(columns=["id", "cliente", "status", "data", "valor"])
 
     pedidos = df.to_dict(orient="records")
     return render_template("pageAdmin.html", pedidos=pedidos)
+
+
+# ---------------------------------------------
+# ATUALIZAR STATUS DE PEDIDO
+# ---------------------------------------------
 @app.route("/atualizar_status", methods=["POST"])
 def atualizar_status():
     data = request.get_json()
@@ -249,26 +256,25 @@ def atualizar_status():
         cur = conn.cursor()
         cur.execute("UPDATE Pedido SET status = %s WHERE idPedido = %s", (novo_status, id_pedido))
         conn.commit()
+
         cur.close()
         conn.close()
-        return jsonify({"mensagem": "Status atualizado com sucesso!"})
+        return jsonify({"mensagem": "Status atualizado!"})
+
     except Exception as e:
-        print("Erro ao atualizar status:", e)
         return jsonify({"erro": str(e)}), 500
 
 
-# DASHBOARD
+# ---------------------------------------------
+# DASHBOARD (mesmo da sua versão)
+# ---------------------------------------------
 @app.route("/dashboard", methods=["GET", "POST"])
-
 def dashboard():
     if 'user' not in session or not session.get("is_admin"):
         return redirect(url_for('login'))
 
     try:
-        # 🔹 Conecta no banco
         conn = get_connection()
-
-        # 🔹 Lê os pedidos com JOINs pra trazer dados ricos
         query = """
             SELECT 
                 p.idPedido AS id,
@@ -285,78 +291,55 @@ def dashboard():
             ORDER BY p.data_pedido;
         """
         df = pd.read_sql(query, conn)
-
         conn.close()
-
-    except Exception as e:
-        print("Erro ao carregar dados do banco:", e)
-        # Se der erro, cria DataFrame vazio pra não quebrar a tela
+    except Exception:
         df = pd.DataFrame(columns=['id', 'cliente', 'status', 'data', 'valor', 'sabores'])
 
-    # 🔹 Conversões e filtros
-    if 'data' in df.columns:
-        df['data'] = pd.to_datetime(df['data'], errors='coerce')
-        df = df.dropna(subset=['data'])
-    else:
-        df['data'] = pd.to_datetime([])
+    df['data'] = pd.to_datetime(df['data'], errors='coerce')
+    df = df.dropna(subset=['data'])
+    df['valor'] = pd.to_numeric(df['valor'], errors='coerce')
 
-    if 'valor' in df.columns:
-        df['valor'] = pd.to_numeric(df['valor'], errors='coerce')
-        df = df.dropna(subset=['valor'])
-    else:
-        df['valor'] = pd.Series(dtype=float)
-
-    # 🔹 Filtro de datas
     data_inicio = request.form.get("dataInicio")
     data_fim = request.form.get("dataFim")
-    df_filtrado = df.copy()
 
+    df_filtrado = df.copy()
     if data_inicio:
         df_filtrado = df_filtrado[df_filtrado['data'] >= data_inicio]
     if data_fim:
         df_filtrado = df_filtrado[df_filtrado['data'] <= data_fim]
 
-    # 🔹 Indicadores
     total_pedidos = len(df_filtrado)
     total_finalizados = len(df_filtrado[df_filtrado['status'].str.lower() == 'entregue'])
     total_cancelados = len(df_filtrado[df_filtrado['status'].str.lower() == 'cancelado'])
-    faturamento = df_filtrado['valor'].sum() if not df_filtrado.empty else 0
+    faturamento = df_filtrado['valor'].sum()
 
-    # 🔹 Gráficos (mantidos)
     fig1 = plt.figure(figsize=(5,5))
-    if not df_filtrado.empty and 'status' in df_filtrado.columns:
+    if not df_filtrado.empty:
         df_filtrado['status'].value_counts().plot.pie(autopct='%1.1f%%')
     plt.title("Pedidos por Status")
     grafico_status = gerar_grafico_base64(fig1)
 
     fig2 = plt.figure(figsize=(6,4))
-    if not df_filtrado.empty and 'sabores' in df_filtrado.columns:
+    if not df_filtrado.empty:
         sabores = df_filtrado['sabores'].dropna().str.split(',', expand=True).stack()
-        if not sabores.empty:
-            sabores.value_counts().plot.bar()
+        sabores.value_counts().plot.bar()
     plt.title("Sabores Mais Pedidos")
-    plt.ylabel("Quantidade")
     grafico_sabores = gerar_grafico_base64(fig2)
 
     fig3 = plt.figure(figsize=(6,4))
-    if not df_filtrado.empty and df_filtrado['valor'].any():
+    if not df_filtrado.empty:
         df_filtrado.groupby(df_filtrado['data'].dt.date)['valor'].sum().plot(kind='bar')
-        plt.ylabel("R$")
         plt.xticks(rotation=45)
     plt.title("Faturamento Diário")
     grafico_faturamento = gerar_grafico_base64(fig3)
 
     fig4 = plt.figure(figsize=(6,4))
-    if not df_filtrado.empty and 'data' in df_filtrado.columns:
+    if not df_filtrado.empty:
         df_filtrado['dia_semana'] = df_filtrado['data'].dt.day_name()
         finalizados = df_filtrado[df_filtrado['status'].str.lower() == 'entregue']
-        if not finalizados.empty:
-            finalizados['dia_semana'].value_counts().sort_index().plot.bar()
-            plt.ylabel("Quantidade de Entregas")
-    plt.title("Dias da Semana com Mais Entregas")
+        finalizados['dia_semana'].value_counts().plot.bar()
+    plt.title("Dias com Mais Entregas")
     grafico_dias = gerar_grafico_base64(fig4)
-
-    pedidos_lista = df_filtrado.to_dict(orient='records')
 
     return render_template(
         "dashboard.html",
@@ -368,9 +351,13 @@ def dashboard():
         grafico_sabores=grafico_sabores,
         grafico_faturamento=grafico_faturamento,
         grafico_dias=grafico_dias,
-        pedidos=pedidos_lista,
+        pedidos=df_filtrado.to_dict(orient='records'),
         data_inicio=data_inicio,
         data_fim=data_fim
     )
+
+# ---------------------------------------------
+# RUN
+# ---------------------------------------------
 if __name__ == '__main__':
     app.run(debug=True)
